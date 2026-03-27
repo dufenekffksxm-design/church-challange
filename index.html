@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>십자가를 지나 부활로 · 고난주간 매일 도전</title>
+
+<!-- 카카오톡 / SNS 미리보기 -->
+<meta property="og:title" content="십자가를 지나 부활로">
+<meta property="og:description" content="2026 고난주간 매일 도전 · 진실한숲교회">
+<meta property="og:image" content="https://dufenekffksxm-design.github.io/church-challange/og-image.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="십자가를 지나 부활로">
+<meta name="twitter:description" content="2026 고난주간 매일 도전 · 진실한숲교회">
+<meta name="twitter:image" content="https://dufenekffksxm-design.github.io/church-challange/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    height: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f0eb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 16px 32px;
+    min-height: 100dvh;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .page-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: #2a2a2a;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+
+  .page-subtitle {
+    font-size: 12px;
+    color: #999;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+
+  /* Day tabs */
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+    justify-content: center;
+    flex-wrap: nowrap;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .nav-tab {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #e8e2db;
+    color: #999;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .nav-tab .tab-day {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-tab .tab-weekday {
+    display: block;
+    font-size: 10px;
+    font-weight: 300;
+    margin-top: 2px;
+  }
+
+  .nav-tab.active {
+    background: #2a2a2a;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .nav-tab.today {
+    position: relative;
+  }
+
+  .nav-tab.today::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #c0392b;
+  }
+
+  .nav-tab.active.today::after {
+    background: #e74c3c;
+  }
+
+  /* Swipe area */
+  .swipe-area {
+    width: 100%;
+    max-width: 420px;
+    touch-action: pan-y;
+    position: relative;
+  }
+
+  /* Card */
+  .card {
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+    display: none;
+  }
+
+  .card.active {
+    display: block;
+    animation: cardFadeIn 0.35s ease;
+  }
+
+  @keyframes cardFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-inner {
+    position: relative;
+    padding: 36px 28px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Backgrounds per day */
+  .card[data-day="1"] .card-inner {
+    background: linear-gradient(165deg, #5c4033 0%, #3e2a1e 40%, #2a1a10 100%);
+  }
+  .card[data-day="2"] .card-inner {
+    background: linear-gradient(165deg, #7a4068 0%, #52284a 40%, #2e1528 100%);
+  }
+  .card[data-day="3"] .card-inner {
+    background: linear-gradient(165deg, #3d4f6a 0%, #2a3750 40%, #161e30 100%);
+  }
+  .card[data-day="4"] .card-inner {
+    background: linear-gradient(165deg, #4a5c48 0%, #354336 40%, #1e2a1e 100%);
+  }
+  .card[data-day="5"] .card-inner {
+    background: linear-gradient(165deg, #1e1e3a 0%, #12122a 40%, #0a0a18 100%);
+  }
+  .card[data-day="6"] .card-inner {
+    background: linear-gradient(165deg, #4a4a4a 0%, #2e2e2e 40%, #1a1a1a 100%);
+  }
+
+  /* Texture overlay */
+  .card-inner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  /* Cross watermark */
+  .cross-mark {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.12;
+  }
+
+  .cross-mark::before,
+  .cross-mark::after {
+    content: '';
+    position: absolute;
+    background: #fff;
+    border-radius: 1px;
+  }
+
+  .cross-mark::before {
+    width: 2px;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .cross-mark::after {
+    width: 100%;
+    height: 2px;
+    top: 30%;
+    left: 0;
+  }
+
+  /* Content */
+  .card-top { position: relative; z-index: 1; }
+
+  .day-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 4px;
+  }
+
+  .day-date {
+    font-size: 11px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 18px;
+  }
+
+  .card-theme {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.4;
+    margin-bottom: 5px;
+    letter-spacing: -0.5px;
+  }
+
+  .card-theme-sub {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .card-middle {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 4px;
+  }
+
+  .meditation {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.82);
+    line-height: 1.95;
+    margin-bottom: 22px;
+    word-break: keep-all;
+  }
+
+  .divider {
+    width: 28px;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+    margin-bottom: 22px;
+  }
+
+  .challenge-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 8px;
+  }
+
+  .challenge-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.75;
+    word-break: keep-all;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 12px;
+    border-left: 3px solid rgba(255,255,255,0.25);
+  }
+
+  .card-bottom {
+    position: relative;
+    z-index: 1;
+    margin-top: 24px;
+    padding-bottom: 4px;
+  }
+
+  .scripture {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .scripture-ref {
+    display: block;
+    margin-top: 4px;
+    font-style: normal;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .church-name {
+    margin-top: 16px;
+    font-size: 10px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 1px;
+  }
+
+  /* Swipe indicator */
+  .swipe-dots {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .swipe-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ccc5bc;
+    transition: all 0.3s;
+  }
+
+  .swipe-dot.active {
+    background: #2a2a2a;
+    width: 20px;
+    border-radius: 3px;
+  }
+
+  /* Swipe hint */
+  .swipe-hint {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 11px;
+    color: #bbb;
+    font-weight: 300;
+    opacity: 1;
+    transition: opacity 0.5s;
+  }
+
+  .swipe-hint.hidden {
+    opacity: 0;
+  }
+
+  /* Footer message for day 6 */
+  .footer-msg {
+    text-align: center;
+    margin-top: 24px;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 12px;
+    max-width: 420px;
+    width: 100%;
+    display: none;
+  }
+
+  .footer-msg.visible {
+    display: block;
+  }
+
+  .footer-msg p {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.8;
+    word-break: keep-all;
+  }
+
+  /* Desktop tweaks */
+  @media (min-width: 500px) {
+    body { padding: 32px 16px 40px; }
+    .card-inner { padding: 40px 32px 44px; }
+    .card-theme { font-size: 26px; }
+    .meditation { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="page-title">십자가를 지나 부활로</div>
+  <div class="page-subtitle">2026 고난주간 매일 도전 · 진실한숲교회</div>
+</div>
+
+<div class="nav-tabs" id="tabs"></div>
+
+<div class="swipe-area" id="swipeArea"></div>
+
+<div class="swipe-dots" id="dots"></div>
+<div class="swipe-hint" id="swipeHint">← 좌우로 넘겨보세요 →</div>
+
+<div class="footer-msg" id="footerMsg">
+  <p>내일은 부활절입니다.<br>그 아침, 빈 무덤 앞에서<br>우리는 다시 희망을 노래합니다.</p>
+</div>
+
+<script>
+const days = [
+  {
+    day: 1, label: "DAY 1 · 월요일", date: "3월 30일 월요일", weekday: "월",
+    theme: "성전 정화", themeSub: "내 안의 무너져야 할 것",
+    meditation: "예수님은 성전에서 상을 뒤엎으셨습니다.\n그것은 분노가 아니라,\n하나님의 집을 향한 뜨거운 사랑이었습니다.\n\n우리의 마음도 하나님의 성전입니다.\n오늘, 그 성전 안에\n하나님이 아닌 것이 자리 잡고 있지는 않은지\n조용히 들여다봅니다.",
+    challenge: "오늘 점심시간에 5분만 핸드폰을 뒤집어 놓아보세요.\n그 5분 동안 \"하나님,\n제 마음의 자리를 비웁니다\"라고\n한 번만 기도합니다.",
+    scripture: "내 아버지의 집을 장사하는 집으로 만들지 말라",
+    scriptureRef: "요한복음 2:16",
+    calDate: "2026-03-30"
+  },
+  {
+    day: 2, label: "DAY 2 · 화요일", date: "3월 31일 화요일", weekday: "화",
+    theme: "향유 붓기", themeSub: "낭비 같은 헌신",
+    meditation: "마리아는 일 년치 품삯에 해당하는 향유를\n예수님의 발에 부었습니다.\n사람들은 '낭비'라 했지만,\n예수님은 '아름다운 일'이라 하셨습니다.\n\n효율과 성과의 눈으로 보면 낭비입니다.\n그러나 사랑은 원래 낭비처럼 보입니다.",
+    challenge: "오늘 평소 내가 안 하던 집안일\n하나를 해보세요.\n설거지든, 청소든, 장보기든.\n내 시간을 기꺼이 '낭비'해봅니다.",
+    scripture: "이 여자가 내 몸에 이 향유를 부은 것은 내 장례를 위하여 한 것이니라",
+    scriptureRef: "마태복음 26:12",
+    calDate: "2026-03-31"
+  },
+  {
+    day: 3, label: "DAY 3 · 수요일", date: "4월 1일 수요일", weekday: "수",
+    theme: "배신의 밤", themeSub: "깨어짐 앞의 정직",
+    meditation: "유다만 예수님을 배신한 것이 아닙니다.\n베드로는 부인했고,\n제자들은 모두 도망쳤습니다.\n\n우리도 매일 작은 배신을 합니다.\n알면서도 외면하고,\n믿는다 하면서 불안해합니다.\n\n그런 우리를 아시면서도\n예수님은 그 밤, 빵을 떼어 주셨습니다.",
+    challenge: "오늘 잠들기 전, 메모장에\n\"요즘 나의 솔직한 마음\"을\n세 줄만 적어보세요.\n꾸미지 않아도 됩니다.\n하나님은 그 날것의 마음을 받으십니다.",
+    scripture: "다 버리고 도망하니라",
+    scriptureRef: "마가복음 14:50",
+    calDate: "2026-04-01"
+  },
+  {
+    day: 4, label: "DAY 4 · 목요일", date: "4월 2일 목요일", weekday: "목",
+    theme: "세족", themeSub: "낮아짐의 복음",
+    meditation: "하나님의 아들이 무릎을 꿇고\n제자들의 더러운 발을 씻기셨습니다.\n왕이 종의 자리로 내려온 것입니다.\n\n복음은 위에서 아래로 흐릅니다.\n높아지려는 것이 아니라\n낮아지는 데서 하나님 나라가 시작됩니다.",
+    challenge: "오늘 가족이나 동료가 쓴 컵,\n놓아둔 신발, 남긴 자리를\n말없이 정리해보세요.\n알아채지 못해도 괜찮은 섬김입니다.\n\n✦ 한 걸음 더 — 오늘 저녁,\n사랑하는 가족의 발을 직접 씻겨보세요.\n남편의, 아내의, 자녀의 발을.\n어색해도 괜찮습니다.\n예수님도 그러셨습니다.",
+    scripture: "내가 너희에게 행한 것 같이 너희도 행하게 하려 하여 본을 보였노라",
+    scriptureRef: "요한복음 13:15",
+    calDate: "2026-04-02"
+  },
+  {
+    day: 5, label: "DAY 5 · 금요일", date: "4월 3일 금요일", weekday: "금",
+    theme: "십자가", themeSub: "죽음을 통과하는 사랑",
+    meditation: "십자가는 실패가 아니었습니다.\n그것은 사랑의 절정이었습니다.\n\n하나님은 죽음을 피해가지 않으시고\n죽음 한가운데를 통과하셨습니다.\n그래서 이제 우리의 어떤 어둠도\n그분이 가시지 않은 곳이 아닙니다.\n\n오늘, 그 사랑 앞에 잠시 멈춰 섭니다.",
+    challenge: "오늘 하루, 불편하거나 귀찮은 부탁 하나를\n거절하지 않고 받아보세요.\n그 작은 불편함 안에서\n십자가의 사랑을 떠올려봅니다.",
+    scripture: "다 이루었다",
+    scriptureRef: "요한복음 19:30",
+    calDate: "2026-04-03"
+  },
+  {
+    day: 6, label: "DAY 6 · 토요일", date: "4월 4일 토요일", weekday: "토",
+    theme: "침묵의 토요일", themeSub: "기다림의 신앙",
+    meditation: "토요일, 제자들에게는\n가장 길고 어두운 하루였을 것입니다.\n예수님은 무덤 안에 계시고,\n아무 일도 일어나지 않았습니다.\n\n우리의 신앙에도 이런 토요일이 있습니다.\n기도해도 응답이 없는 것 같은 시간,\n하나님이 침묵하시는 것 같은 계절.\n\n그러나 그 침묵 속에서\n부활은 이미 준비되고 있었습니다.",
+    challenge: "오늘 10분만 아무 소리 없이 앉아보세요.\n음악도, 영상도 없이.\n그 침묵 속에서\n내일 아침 부활의 빛을 기다립니다.",
+    scripture: "여호와를 앙망하는 자는 새 힘을 얻으리니",
+    scriptureRef: "이사야 40:31",
+    calDate: "2026-04-04"
+  }
+];
+
+// Determine which day to show based on today's date
+function getTodayIndex() {
+  const today = new Date();
+  const todayStr = today.getFullYear() + '-' +
+    String(today.getMonth() + 1).padStart(2, '0') + '-' +
+    String(today.getDate()).padStart(2, '0');
+  for (let i = 0; i < days.length; i++) {
+    if (days[i].calDate === todayStr) return i;
+  }
+  if (todayStr < days[0].calDate) return 0;
+  return days.length - 1;
+}
+
+let currentIndex = getTodayIndex();
+
+// Today string for marking
+const todayStr = (() => {
+  const t = new Date();
+  return t.getFullYear() + '-' + String(t.getMonth()+1).padStart(2,'0') + '-' + String(t.getDate()).padStart(2,'0');
+})();
+
+// Build tabs
+const tabsEl = document.getElementById('tabs');
+days.forEach((d, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'nav-tab' + (i === currentIndex ? ' active' : '');
+  if (d.calDate === todayStr) btn.classList.add('today');
+  btn.innerHTML = `<span class="tab-day">Day${d.day}</span><span class="tab-weekday">${d.weekday}</span>`;
+  btn.onclick = () => goTo(i);
+  tabsEl.appendChild(btn);
+});
+
+// Build cards (all in swipe-area, show/hide)
+const container = document.getElementById('swipeArea');
+days.forEach((d, i) => {
+  const card = document.createElement('div');
+  card.className = 'card' + (i === currentIndex ? ' active' : '');
+  card.dataset.day = d.day;
+  card.innerHTML = `
+    <div class="card-inner">
+      <div class="cross-mark"></div>
+      <div class="card-top">
+        <div class="day-label">${d.label}</div>
+        <div class="day-date">${d.date}</div>
+        <div class="card-theme">${d.theme}</div>
+        <div class="card-theme-sub">${d.themeSub}</div>
+      </div>
+      <div class="card-middle">
+        <div class="meditation">${d.meditation.replace(/\n/g, '<br>')}</div>
+        <div class="divider"></div>
+        <div class="challenge-label">오늘의 도전</div>
+        <div class="challenge-text">${d.challenge.replace(/\n/g, '<br>')}</div>
+      </div>
+      <div class="card-bottom">
+        <div class="scripture">${d.scripture}<span class="scripture-ref">${d.scriptureRef}</span></div>
+        <div class="church-name">진실한숲교회 · 2026 고난주간</div>
+      </div>
+    </div>
+  `;
+  container.appendChild(card);
+});
+
+// Build dots
+const dotsEl = document.getElementById('dots');
+days.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'swipe-dot' + (i === currentIndex ? ' active' : '');
+  dotsEl.appendChild(dot);
+});
+
+// Show/hide cards
+const allCards = document.querySelectorAll('.card');
+
+function updateUI() {
+  allCards.forEach((c, i) => c.classList.toggle('active', i === currentIndex));
+  document.querySelectorAll('.nav-tab').forEach((t, i) => t.classList.toggle('active', i === currentIndex));
+  document.querySelectorAll('.swipe-dot').forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+  document.getElementById('footerMsg').classList.toggle('visible', currentIndex === 5);
+}
+
+function goTo(index) {
+  currentIndex = Math.max(0, Math.min(index, days.length - 1));
+  updateUI();
+  hideHint();
+}
+
+// Swipe gesture detection (show/hide based)
+const swipeArea = document.getElementById('swipeArea');
+let startX = 0, startY = 0, diffX = 0, isHorizontal = null;
+
+swipeArea.addEventListener('touchstart', (e) => {
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+  diffX = 0;
+  isHorizontal = null;
+}, { passive: true });
+
+swipeArea.addEventListener('touchmove', (e) => {
+  const dx = e.touches[0].clientX - startX;
+  const dy = e.touches[0].clientY - startY;
+  if (isHorizontal === null) {
+    isHorizontal = Math.abs(dx) > Math.abs(dy);
+  }
+  if (isHorizontal) {
+    diffX = dx;
+  }
+}, { passive: true });
+
+swipeArea.addEventListener('touchend', () => {
+  if (isHorizontal && Math.abs(diffX) > 50) {
+    if (diffX < 0 && currentIndex < days.length - 1) {
+      currentIndex++;
+    } else if (diffX > 0 && currentIndex > 0) {
+      currentIndex--;
+    }
+    updateUI();
+    hideHint();
+  }
+}, { passive: true });
+
+// Hide swipe hint after first interaction
+function hideHint() {
+  document.getElementById('swipeHint').classList.add('hidden');
+}
+</script>
+
+</body>
+</html>
